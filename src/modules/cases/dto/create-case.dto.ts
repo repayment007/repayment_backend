@@ -1,0 +1,45 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString, IsNumber, IsArray } from 'class-validator';
+
+export class CreateCaseDto {
+  @ApiProperty({ example: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', description: 'The User ID of the client' })
+  @IsString()
+  @IsNotEmpty()
+  clientId: string;
+
+
+  @ApiProperty({ example: 'CASE-12345', description: 'The case number' })
+  @IsString()
+  @IsOptional()
+  caseNumber?: string;
+
+  @ApiProperty({ example: 'Phishing', description: 'The type of scam' })
+  @IsString()
+  @IsNotEmpty()
+  scamType: string;
+
+  @ApiProperty({ example: 1500, description: 'The amount lost' })
+  @IsNumber()
+  @IsNotEmpty()
+  amountLost: number;
+
+  @ApiPropertyOptional({ example: 'USD', description: 'The currency of the amount lost', default: 'USD' })
+  @IsString()
+  @IsOptional()
+  currency?: string;
+
+  @ApiProperty({ example: 'Description of the incident...', description: 'Detailed description of the case' })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @ApiPropertyOptional({ example: ['url1', 'url2'], description: 'List of evidence URLs' })
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  evidence?: string[];
+
+  @ApiPropertyOptional({ description: 'The action plan for the case' })
+  @IsOptional()
+  actionPlan?: any;
+}
